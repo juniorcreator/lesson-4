@@ -1,15 +1,17 @@
-function Human(name = 'Vova', age = 30) {
-  this.name = name;
-  this.age = age;
-  let eat = 0;
-  let drink = 0;
-  let doEat = () => {eat++;};
-  let dodrink = () => {drink++;};
-  this.makeFeed = () => {doEat();};
-  this.makeDrink = () => {dodrink();};
+
+//# task 1
+function Human(n = 'Vova', a = 30) {
+  let _name = n;
+  let _age = a;
+  this.setName = (n) => {_name = n};
+  this.getName = () => _name;
+  this.setAge = (a) => {_age = a};
+  this.getAge = () => _age;
   this.say = () => {
-    console.log(`Hi I am ${this.name} and I am ${this.age}, wanna eat = ${eat}, wanna drink = ${drink}`);
+    console.log(`Hi I am ${_name} and I am ${_age}`);
   }
 }
-
 let human = new Human('Igor', 29);
+//# task 2
+
+
