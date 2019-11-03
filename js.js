@@ -80,3 +80,72 @@ Array.prototype.mySort2 = function(func) {
     return this;
   }
 };
+
+
+// lesson 5 practice lesson
+
+// #1 task
+
+let menu = ['home', 'about', 'lesson', 'lesson1', 'contacts'];
+const removeActiveClasses = (el) => {
+  document.querySelectorAll(el).forEach((el, index) => {
+    el.classList.remove('active');
+  })
+};
+const changeContent = (e) => {
+  e.stopPropagation();
+  removeActiveClasses('.list li');
+  e.target.classList.add('active');
+  document.querySelectorAll('.content__item').forEach((el, index) => {
+    el.classList.remove('active');
+    if (el.dataset.item === e.target.textContent) {
+      el.classList.add('active');
+    }
+  });
+};
+const menuCreator = (arr) => {
+  arr.forEach((el) => {
+    let li = document.createElement('li');
+    li.textContent = el;
+    li.addEventListener('click', (e) => {
+      changeContent(e);
+    });
+    document.getElementById('menu').appendChild(li);
+  })
+};
+menuCreator(menu);
+
+//#2 task
+
+const randomDate = () => {
+  return {
+    year: Math.floor(Math.random() * (2019 - 1990)) + 1990,
+    month:Math.floor(Math.random() * (12 - 1)) + 1,
+    day: Math.floor(Math.random() * (7 - 1)) + 1
+  }
+};
+
+const arrDateCreator = () => {
+  let arr = [];
+  for (let i = 0; i<10; i++) {
+    arr.push(randomDate());
+  }
+  return arr.sort(() => Math.random() - 0.5);
+};
+
+const setToLocal = (dates, from) => {localStorage.setItem(dates, from);};
+
+const getLocal = (item) => {
+  return  JSON.parse(localStorage.getItem(item));
+};
+
+const sortDates = dates =>  dates.sort((prev, next) => prev.year - next.year);
+
+setToLocal('dates', JSON.stringify(arrDateCreator()));
+
+let sortedDates = sortDates(getLocal('dates'));
+
+setToLocal('dates', JSON.stringify(sortedDates));
+
+
+
