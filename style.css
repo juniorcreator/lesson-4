@@ -1,0 +1,51 @@
+.list {
+    margin: 0 0 10px 0;
+    padding: 0;
+    list-style: none;
+}
+.list li {
+    display: inline-block;
+    margin: 0 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: chocolate;
+    transition: background-color .3s ease-in-out;
+    padding: 4px 7px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.list li.active {
+    background-color: blueviolet;
+}
+.list li:hover {
+    background-color: blueviolet;
+}
+
+.content {
+}
+
+.content__item {
+    display: none;
+}
+.content__item.active {
+    display: block;
+}
+.content .content__item {
+    padding: 10px;
+}
+.first {
+    background-color: chocolate;
+}
+.second {
+    background-color: darkgrey;
+}
+.third {
+background-color: peru;
+}
+.fourth {
+background-color: lightslategray;
+}
+.fifth {
+    background-color: blueviolet;
+}

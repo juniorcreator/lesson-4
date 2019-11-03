@@ -101,7 +101,7 @@ const changeContent = (e) => {
   });
 };
 const menuCreator = (arr) => {
-  arr.forEach((el) => {
+  arr.forEach((el, index) => {
     let li = document.createElement('li');
     li.textContent = el;
     li.addEventListener('click', (e) => {
