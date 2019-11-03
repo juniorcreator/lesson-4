@@ -40,7 +40,6 @@ Array.prototype.mySort = function(func) {
     const min = (array) => {
       let smallestElement = array[0];
       let smallestIndex = 0;
-
       for (let i = 1; i < array.length; i++) {
         if (array[i] < smallestElement) {
           smallestElement = array[i];
@@ -65,10 +64,8 @@ Array.prototype.mySort2 = function(func) {
   if (this.length < 2) return;
   if(!arguments.length) {
     for (let i = 0; i < this.length -1; i++) {
-      debugger
       let isSwapped = false;
       for (let j = 0; j < this.length -1; j++) {
-        debugger
         if (this[j] > this[j+1]) {
           let swap = this[j];
           this[j] = this[j+1];
