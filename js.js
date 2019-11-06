@@ -1,91 +1,75 @@
-
 //# task 1
 
 function Human(n = 'Vova', a = 30) {
   let _name = n;
   let _age = a;
-  this.setName = (n) => {_name = n};
+  this.setName = (n) => _name = n;
   this.getName = () => _name;
-  this.setAge = (a) => {_age = a};
+  this.setAge = (a) => _age = a;
   this.getAge = () => _age;
   this.say = () => {
     console.log(`Hi I am ${_name} and I am ${_age}`);
   }
 }
+
 let human = new Human('Igor', 29);
 
 //# task 2
 
-Array.prototype.myMap = function (func) {
+Array.prototype.myMap = function (func, thisArgs) {
   let res = [];
   for (let i = 0; i < this.length; i++) {
-    res.push(func(this[i], i, this));
+    res.push(func.call(thisArgs, this[i], i, this,));
   }
   return res;
 };
 
-Array.prototype.myForEach = function(func) {
+Array.prototype.myForEach = function (func, thisArgs) {
   for (let i = 0; i < this.length; i++) {
-    func(this[i], i, this);
+    func.call(thisArgs, this[i], i, this);
   }
 };
 
+let arr = [1, 4, 2, 11, 5, 10, 6, 3, 8, 7, 9];
+let arr2 = [1, 4, 2, 11];
 
-let arr = [1,4,2,11,5, 10, 6, 3, 8, 7, 9];
-let arr2 = [1,4,2,11];
-
-
-Array.prototype.mySort = function(func) {
-  if (!arguments.length) {
-    const min = (array) => {
-      let smallestElement = array[0];
-      let smallestIndex = 0;
-      for (let i = 1; i < array.length; i++) {
-        if (array[i] < smallestElement) {
-          smallestElement = array[i];
-          smallestIndex = i;
-        }
-      }
-      return smallestIndex;
-    };
-    const sort = (array) => {
-      const sortedArray = [];
-      for (let i = 0; i < array.length; i++) {
-        sortedArray.push(array.splice(min(array), 1)[0]);
-      }
-      return sortedArray;
-    };
-    return  sort(this);
-  }
-};
 
 //## bubble sort
-Array.prototype.mySort2 = function(func) {
+Array.prototype.mySort2 = function (func) {
   if (this.length < 2) return;
-  if(!arguments.length) {
-    for (let i = 0; i < this.length -1; i++) {
-      let isSwapped = false;
-      for (let j = 0; j < this.length -1; j++) {
-        if (this[j] > this[j+1]) {
+  for (let i = 0; i < this.length - 1; i++) {
+    let isSwapped = false;
+    for (let j = 0; j < this.length - 1; j++) {
+      if (!func) {
+        if (this[j].toString() > this[j + 1].toString()) {
           let swap = this[j];
-          this[j] = this[j+1];
-          this[j+1] = swap;
+          this[j] = this[j + 1];
+          this[j + 1] = swap;
+          isSwapped = true;
+        }
+      } else {
+        func(this[j], this[j + 1]); // can not understand what to do next
+        if (this[j] > this[j + 1]) {
+          let swap = this[j];
+          this[j] = this[j + 1];
+          this[j + 1] = swap;
           isSwapped = true;
         }
       }
     }
-    return this;
+    if (!isSwapped) break;
   }
+  return this;
 };
-
 
 // lesson 5 practice lesson
 
 // #1 task
 
 let menu = ['home', 'about', 'lesson', 'lesson1', 'contacts'];
+
 const removeActiveClasses = (el) => {
-  document.querySelectorAll(el).forEach((el, index) => {
+  document.querySelectorAll(el).forEach(el => {
     el.classList.remove('active');
   })
 };
@@ -93,7 +77,7 @@ const changeContent = (e) => {
   e.stopPropagation();
   removeActiveClasses('.list li');
   e.target.classList.add('active');
-  document.querySelectorAll('.content__item').forEach((el, index) => {
+  document.querySelectorAll('.content__item').forEach((el) => {
     el.classList.remove('active');
     if (el.dataset.item === e.target.textContent) {
       el.classList.add('active');
@@ -118,32 +102,37 @@ menuCreator(menu);
 const randomDate = () => {
   return {
     year: Math.floor(Math.random() * (2019 - 1990)) + 1990,
-    month:Math.floor(Math.random() * (12 - 1)) + 1,
+    month: Math.floor(Math.random() * (12 - 1)) + 1,
     day: Math.floor(Math.random() * (7 - 1)) + 1
   }
 };
 
 const arrDateCreator = () => {
   let arr = [];
-  for (let i = 0; i<10; i++) {
+  for (let i = 0; i < 10; i++) {
     arr.push(randomDate());
   }
   return arr.sort(() => Math.random() - 0.5);
 };
 
-const setToLocal = (dates, from) => {localStorage.setItem(dates, from);};
+localStorage.setItem('dates', JSON.stringify(arrDateCreator()));
 
-const getLocal = (item) => {
-  return  JSON.parse(localStorage.getItem(item));
-};
+const sortDates = dates => dates.sort((prev, next) => prev.year - next.year);
 
-const sortDates = dates =>  dates.sort((prev, next) => prev.year - next.year);
+localStorage.setItem('dates', JSON.stringify(arrDateCreator()));
 
-setToLocal('dates', JSON.stringify(arrDateCreator()));
+let sortedDates = sortDates(JSON.parse(localStorage.getItem('dates')));
 
-let sortedDates = sortDates(getLocal('dates'));
+localStorage.setItem('dates', sortedDates);
 
-setToLocal('dates', JSON.stringify(sortedDates));
+let obb = {a: 5, b: 'serhii'};
+let arr5 = [3, 5, 6, 7, 4, 4, 6];
+let hhh = [1, 2, 10, 11, 2, 13, 4, 14, 5, 6, 16];
+
+console.log(hhh.mySort2((a, b) => {
+  return a - b;
+}));
+
 
 
 
